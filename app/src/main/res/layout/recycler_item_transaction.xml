@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/root_view"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="20dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="7dp"
+        app:cardElevation="1dp"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="20dp"
+                android:paddingBottom="15dp"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/what_did"
+                        android:layout_width="wrap_content"
+                        android:textSize="17sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_marginEnd="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="Made an insurance claim." />
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:text="Sunday, on 25/01/2020" />
+
+                <TextView
+                    android:id="@+id/to_insurer"
+                    android:layout_width="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_marginTop="2dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:text="To ecobank" />
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:text="Status: Complete" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
