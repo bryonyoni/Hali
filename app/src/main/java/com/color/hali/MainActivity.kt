@@ -1,7 +1,6 @@
 package com.color.hali
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,11 +9,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.view.get
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.hover.sdk.actions.HoverAction
+import com.hover.sdk.api.Hover
+import com.hover.sdk.api.HoverParameters
+import com.hover.sdk.permissions.PermissionActivity
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
@@ -22,7 +24,8 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity(),
     Fragment_Insurer_options.insurer_options_interface,
     Fragment_pay_premium.pay_premium_interface,
-    Fragment_make_claim.make_claim_interface
+    Fragment_make_claim.make_claim_interface,
+    Hover.DownloadListener
 {
     val _Fragment_Insurer_options = "_Fragment_Insurer_options"
     val insurer_list: ArrayList<insurer> = ArrayList()
@@ -35,6 +38,13 @@ class MainActivity : AppCompatActivity(),
 
         load_transactions()
         load_companies()
+
+        Hover.initialize(applicationContext, this)
+
+        findViewById<TextView>(R.id.permissions).setOnClickListener {
+            val i = Intent(applicationContext, PermissionActivity::class.java)
+            startActivityForResult(i, 0)
+        }
     }
 
     fun load_companies(){
@@ -107,7 +117,7 @@ class MainActivity : AppCompatActivity(),
         override fun onBindViewHolder(viewHolder: ViewHolderTransactions, position: Int) {
             val transaction = transaction_list[position]
 
-            viewHolder.to_insurer.text = "To " + transaction.insurer.name
+            viewHolder.to_insurer.text = transaction.details.amount+ " to " + transaction.insurer.name
 
             val cal = Calendar.getInstance()
             viewHolder.date.text = construct_elapsed_time(cal.timeInMillis-transaction.time)
@@ -173,6 +183,13 @@ class MainActivity : AppCompatActivity(),
         transaction_list.add(transaction)
         load_transactions()
         onBackPressed()
+
+        val i = HoverParameters.Builder(applicationContext)
+            .request("a4ab1dc7") // Add your action ID here
+            .extra("bizNumber", "328100")
+            .extra("acctNumber", "328100")
+            .extra("amount", details.amount).buildIntent()
+        startActivityForResult(i, 0)
     }
 
     override fun onBackPressed() {
@@ -265,6 +282,16 @@ class MainActivity : AppCompatActivity(),
             return time_in_seconds.toString()+t
         }
 
+    }
+
+    override fun onSuccess(p0: java.util.ArrayList<HoverAction>?) {
+
+    }
+
+    override fun onError(p0: String?) {
+
+//		Toast.makeText(this, "Error while attempting to download actions, see logcat for error", Toast.LENGTH_LONG).show();
+        Log.e("TAG", "Error: $p0")
     }
 
 

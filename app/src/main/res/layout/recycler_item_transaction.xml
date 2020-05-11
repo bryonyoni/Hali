@@ -37,7 +37,7 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:layout_marginEnd="60dp"
                         android:layout_height="wrap_content"
-                        android:text="Made an insurance claim." />
+                        android:text="Made an insurance payment." />
 
 
                 </RelativeLayout>
